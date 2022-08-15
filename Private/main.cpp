@@ -1,5 +1,5 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
-
+#include "CoreMinimal.h"
 #include "UnSkynet.h"
 
 #include "TestRunnable.h"
