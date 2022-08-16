@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "WorkerRunnable.h"
+#include "Service.h"
 
 //无锁队列
 // TLockFreePointerListFIFO<T>：先进先出；
@@ -36,4 +37,9 @@ private:
 	void StartWorker();
 private:
 	TArray<FWorkerRunable*> workers;
+
+	TMap<uint32, Service> services;
+	uint32 incrId = 0;
+	TLockFreePointerListUnordered<Service,0> Queue;
+	int globalLen = 0;
 };
