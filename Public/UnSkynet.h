@@ -11,6 +11,11 @@
 // TLockFreePointerListLIFO<T>：后进先出；
 /*TLockFreePointerListUnordered<T>：看注释是说这个List内部元素是无序的，但效率比前面两个更高。*/
 
+struct StartSetting
+{
+	int workerNum;
+};
+
 class UnSkynet
 {
 public:
@@ -29,13 +34,15 @@ public:
 	//构造函数
 	UnSkynet();
 
-	void Start();
+	void Start(StartSetting* setting);
 	void Stop();
 	void WaitComplete();
 private:
 	//开启工作线程
 	void StartWorker();
 private:
+	StartSetting* startSetting;
+
 	TArray<FWorkerRunable*> workers;
 
 	TMap<uint32, Service> services;

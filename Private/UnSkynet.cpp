@@ -7,8 +7,9 @@ UnSkynet::UnSkynet()
 {
 }
 
-void UnSkynet::Start()
+void UnSkynet::Start(StartSetting* setting)
 {
+	startSetting = setting;
 	this->StartWorker();
 }
 
@@ -30,7 +31,8 @@ void UnSkynet::WaitComplete()
 
 void UnSkynet::StartWorker()
 {
-	for (int i = 0; i < 8; i++) 
+	int workerNum = startSetting->workerNum;
+	for (int i = 0; i < workerNum; i++)
 	{
 		// 调用FRunnableThread::Create来创建一个线程
 		FWorkerRunable* worker = new FWorkerRunable(i);

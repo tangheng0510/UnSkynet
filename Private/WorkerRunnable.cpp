@@ -3,7 +3,7 @@
 FWorkerRunable::FWorkerRunable(int32 index)
 {
 	ThreadIndex = index;
-	UE_LOG(TestLog, Display, TEXT("FWorkerRunable Contruct: ThreadIndex:%d tid:0x%x FrameIndex:%llu"), ThreadIndex, FPlatformTLS::GetCurrentThreadId(), GFrameCounter);
+	UE_LOG(TestLog, Display, TEXT("FWorkerRunable Contruct: ThreadIndex:%d tid:0x%x"), ThreadIndex, FPlatformTLS::GetCurrentThreadId());
 
 	thread = MakeShareable(FRunnableThread::Create(this, *FString::Printf(TEXT("worker:%d"), index)));
 }
@@ -14,7 +14,7 @@ uint32 FWorkerRunable::Run()
 	while (!IsStop)
 	{
 		FPlatformProcess::Sleep(2.0f);
-		UE_LOG(TestLog, Display, TEXT("FWorkerRunable Run: 222 ThreadIndex:%d tid:0x%x FrameIndex:%llu"), ThreadIndex, FPlatformTLS::GetCurrentThreadId(), GFrameCounter);
+		UE_LOG(TestLog, Display, TEXT("FWorkerRunable Run ThreadIndex:%d tid:0x%x"), ThreadIndex, FPlatformTLS::GetCurrentThreadId());
 	}
 	
 	return 0;
