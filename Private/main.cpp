@@ -9,21 +9,29 @@ IMPLEMENT_APPLICATION(UnSkynet, "UnSkynet");
 
 INT32_MAIN_INT32_ARGC_TCHAR_ARGV()
 {
-	GEngineLoop.PreInit(ArgC, ArgV);
+	FString CmdLine = FCommandLine::BuildFromArgV(nullptr, ArgC, ArgV,nullptr);
+	GEngineLoop.PreInit(*CmdLine);
 	UE_LOG(LogUnSkynet, Display, TEXT("Hello World"));
+	UE_LOG(LogUnSkynet, Display, TEXT("CmdLine: %s"), *CmdLine);
+	// 	FParse::Param用来解析形如 - xx的参数
+	// 	FParse::Value用来解析形如key = value或 - key = value的	
+	FString param;
+	FParse::Value(*CmdLine, TEXT("-test="), param);
+	UE_LOG(LogUnSkynet, Display, TEXT("param: %s"), *param);
+	bool btest2 = FParse::Param(*CmdLine, TEXT("test"));
+	UE_LOG(LogUnSkynet, Display, TEXT("test: %d"), btest2);
 
 	UnSkynet::instance()->Start();
-
-	int count = 0;
 	while (!IsEngineExitRequested())
 	{
-		count = count + 1;
-		//UE_LOG(LogUnSkynet, Display, TEXT("%d"), count);
-		FPlatformProcess::Sleep(0.03);
+		FPlatformProcess::Sleep(1.0f);
 	}
-
 	UnSkynet::instance()->Stop();
 	UnSkynet::instance()->WaitComplete();
+
+	FEngineLoop::AppPreExit();
+	FModuleManager::Get().UnloadModulesAtShutdown();
+	FEngineLoop::AppExit();
 
 	return 0;
 }
