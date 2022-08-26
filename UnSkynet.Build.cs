@@ -10,9 +10,13 @@ public class UnSkynet : ModuleRules
 		PublicIncludePaths.Add("Runtime/Core/Public/Misc");
 		PublicIncludePaths.Add("Runtime/Core/Public/HAL");
 
-		PrivateIncludePaths.Add("Runtime/Launch/Private");		// For LaunchEngineLoop.cpp include
+		PrivateIncludePaths.Add("Runtime/Launch/Private");      // For LaunchEngineLoop.cpp include
 
-		PrivateDependencyModuleNames.Add("Core");
-		PrivateDependencyModuleNames.Add("Projects");
+		PublicDependencyModuleNames.AddRange(new string[] {
+			"Core",
+			"Projects",
+			"Sockets",
+			"Networking"
+		});
 	}
 }

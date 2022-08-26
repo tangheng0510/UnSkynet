@@ -1,6 +1,9 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 #include "CoreMinimal.h"
 #include "UnSkynet.h"
+#include "SocketSubsystem.h"
+#include "IPAddress.h"
+#include "Sockets.h"
 #include "RequiredProgramMainCPPInclude.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogUnSkynet, Log, All);
@@ -33,7 +36,6 @@ INT32_MAIN_INT32_ARGC_TCHAR_ARGV()
 {
 	FString CmdLine = FCommandLine::BuildFromArgV(nullptr, ArgC, ArgV,nullptr);
 	GEngineLoop.PreInit(*CmdLine);
-	UE_LOG(LogUnSkynet, Display, TEXT("Hello World"));
 	UE_LOG(LogUnSkynet, Display, TEXT("CmdLine: %s"), *CmdLine);
 
 
@@ -59,6 +61,17 @@ INT32_MAIN_INT32_ARGC_TCHAR_ARGV()
 	{
 		return 0;
 	}
+
+// 	ISocketSubsystem* SocketSubsystem = ISocketSubsystem::Get();
+// 	TSharedRef<FInternetAddr> InternetAddress = SocketSubsystem->CreateInternetAddr();
+// 	InternetAddress->SetAnyAddress();
+// 	InternetAddress->SetPort(6666);
+// 	FSocket* NewSocket = SocketSubsystem->CreateSocket(NAME_Stream, TEXT("testSocket"));
+// 	NewSocket->SetNonBlocking(true);
+// 	NewSocket->Bind(*InternetAddress);
+// 	int32 ActualBufferSize;
+// 	NewSocket->SetSendBufferSize(65535, ActualBufferSize);
+// 	NewSocket->Listen(16);
 
 	UnSkynet::instance()->Start(setting);
 	while (!IsEngineExitRequested())
